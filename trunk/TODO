@@ -1,0 +1,13 @@
+ * Create clientside imagemap code
+ * Create serverside imagemap code
+ * Introduce an option that lets one choose between
+   the above imagemap modes.
+ * Parse MT tags in BlogTime tag attributes.
+ * Introduce a yearlyex mode that allows one
+   to display weeks or month  of a year instead
+   of days of a year
+ * Introduce an option that allows one to
+   trigger the visualization of comments per
+   blog entry
+ * Test code
+ * Comment code

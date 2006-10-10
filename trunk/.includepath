@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includepath>
+  <includepathentry path="${project_path}/extlib" />
+  <includepathentry path="V:\dsh.name\mt-system\extlib" />
+  <includepathentry path="V:\dsh.name\mt-system\lib" />
+</includepath>
+

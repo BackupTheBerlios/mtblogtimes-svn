@@ -1,0 +1,153 @@
+BLOGTIMES
+
+http://nilesh.org/mt/blogtimes/
+http://www.daniel.stefan.haischt.name/
+-------------------------------------------------------------------------------
+
+Inspired by Brad Chaote and Adam Kalsey's never-say-not-possible MT plugins, I
+came up with a wierd thought of plotting the post times of my blog in a 
+timespan of 24 hours. And I knew it might not be impossible, even though I had 
+never ever peeked into the MT code and plugin API. And here I am, after 3 days 
+of poking and probing through MT plugin API and Brad and Kalsey's plugins. 
+This goes miles to prove how very well Ben Trott has created the MT API. They 
+are damn easy to code!
+
+What this plugin does is to create a chart which plots the time of your posts
+(in a specified period) on a bar of the 24 hours of the day. I having found 
+any apparent advantage of doing so. Well, probably someone will devise a way 
+of using this too. Say like, analysing the blog patterns for various blogs 
+(provided everyone shared their blogtimes) .. or like finding out a true 
+blogomaniac, a person who blogs all day... Nevertheless the resulting graphic 
+looks cool.
+-------------------------------------------------------------------------------
+DOWNLOAD
+You can download this plugin here: 
+http://nilesh.org/mt/blogtimes/mtblogtimes-1.0.tar.gz      OR
+http://nilesh.org/mt/blogtimes/mtblogtimes-1.0.zip
+-------------------------------------------------------------------------------
+SUBVERSION REPOSITORY
+You can checkout a development version of MT_BlogTimes using
+a Subversion client. SVN URL:
+http://svn.daniel.stefan.haischt.name:8080/repos/dsh.name/MTBlogTimes
+-------------------------------------------------------------------------------
+PREREQUISITES
+This plugin has been tested on MovableType v2.51 but should work on versions 
+>= 2.2. Also, it requires the Perl GD module. I have tested the plugin using 
+GD v1.4. You should not have any problem with newer versions.
+-------------------------------------------------------------------------------
+INSTALLATION
+Extract the tar-gzip or the zip file and copy its contents to the MT folder. 
+
+(mt home)/mt-blogtimes.cgi
+(mt home)/extlib/MTPlugins/MTBlogTimes.pm
+(mt home)/plugins/blogtimes/mt-blogtimes.pl
+(mt home)/tmpl/cms/blogtimes.tmpl
+-------------------------------------------------------------------------------
+DESCRIPTION
+This plugin allows you to plot the time of your posts in a given period in 
+the form of a timeline bar.
+
+Tags made available through this plugin:
+
+<MTBlogTimes>: Container tag for bar/pie creation. 
+
+<MTBlogTimesWidth>: Returns the width of the image. This is not the same as the
+ width you specify in the tag attributes. This is because the bar is padded 
+ additionally for writing the text.
+
+<MTBlogTimesHeight>: Returns the height of the image. This is not the same as 
+the height you specify in the tag attributes. This is because the bar is 
+padded additionally for writing the text. 
+
+<MTBlogTimesFilename>: Returns the filename of the image 
+
+<MTBlogTimesFullFilename>: Returns the complete path of the image
+
+<MTBlogTimesFileURL>: Returns the URL created for the image.
+
+TAG ATTRIBUTES FOR <MTBlogTimes>
+
+width: This allows you to specify the width of the timeline bar in pixels. 
+This is not the final width of the image because padding will be added to this
+ to put the text. If you do not specify this, the value defaults to 400.
+ 
+height: This allows you to specify the height of the timeline bar in pixels. 
+If you do not specify it, the value defaults to 30.
+
+name: Allows you to specify the name of the image that will be created. The 
+default value is `blogtimes'.
+
+save_dir: This attribute allows you to alternatively specify a sub-directory 
+under <MTBlogSitePath> where you can store the generated image. This directory 
+should be write-accessible to MT or the file won't get created.
+
+linecolor: This allows you to customise the colour of the plot lines on the
+bar. Specify this color in hex format e.g. #RRGGBB. The default value is 
+#FFFFFF
+ 
+textcolor: This allows you to customise the colour of the text on the bar. 
+Specify this color in hex format e.g. #RRGGBB. The default value is #757575
+
+fillcolor: This allows you to customise the colour of the bar background. 
+Specify this color in hex format e.g. #RRGGBB. The default value is #757575
+
+bordercolor: This allows you to customise the colour of the border of the
+image. If you want to turn off the border, simply specify the color of your
+page background. Specify this color in hex format e.g. #RRGGBB. The default
+value is #757575
+   
+padding: This allows you to control the padding around the timeline bar. 
+The default is 5px.
+
+show_text: This allows you to shut off the text and keep only the bar.
+
+period: this allows you to specify the month for which to plot the timeline.
+You need to specify thi sin the format YYYYMM. e.g. November 2002 would be 
+`200211'. If you do not specify this, the current month at the time of 
+rebuilding the page is taken.
+-------------------------------------------------------------------------------
+USAGE
+
+When you rebuild a page containing <MTBlogTimes> tag, an image is generated
+and stored on your server. You can link the image on the page or somewhere 
+else. Please note that the generated image is a PNG image with transparency 
+set. If you do not like transparent images, you'll need to edit the script 
+and remove the appropriate line. Here's an example of how you can use the 
+<MTBlogTimes> plugin -
+
+Simple:
+
+<MTBlogTimes>
+  <img src="<$MTBlogTimesFileURL$>" width="<$MTBlogTimesWidth$>" height="<$MTBlogTimesHeight$>" 
+  border="0" alt="B L O G T I M E S" title="B L O G T I M E S" />
+</MTBlogTimes>
+
+Customised:
+
+<MTBlogTimes fillcolor="#4a4a4a" textcolor="#4a4a4a" 
+ linecolor="#FFFFFF" bordercolor="#4a4a4a" width="400" 
+ height="30" save_dir="images" show_text="on">
+   <a href="http://nilesh.org/mt/blogtimes/"><img src="<$MTBlogTimesFileURL$>" 
+   width="<$MTBlogTimesWidth$>" height="<$MTBlogTimesHeight$>" 
+   border="0" alt="B L O G T I M E S" title="B L O G T I M E S" /></a>
+</MTBlogTimes> 
+
+Either you can paste this code directly on your page, or the cleaner way of 
+doing it is to create a Template Module called BlogTimes and including it on 
+the main page like this - 
+
+<$MTInclude module="BlogTimes"$>
+-------------------------------------------------------------------------------
+CHANGELOG
+
+06/02/2005 - Initial, revamped version of MT-BlogTimes.
+-------------------------------------------------------------------------------
+LICENSE
+
+This plugin is released under the BSD License.
+-------------------------------------------------------------------------------
+AUTHOR
+
+Nilesh Chaudhari (mail at nilesh.org)
+Daniel S. Haischt (me at daniel.stefan.haischt.name)
+-------------------------------------------------------------------------------

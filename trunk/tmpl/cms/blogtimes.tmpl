@@ -1,0 +1,194 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+
+<h2>MT-Blogtimes Blog Sequence Visualization</h2>
+
+<TMPL_IF NAME=BTIMES_SAVED>
+<div class="message"><MT_TRANS phrase="<TMPL_VAR NAME=BTIMES_SAVED>"></div>
+</TMPL_IF>
+
+<TMPL_IF NAME=BTIMES_ERROR>
+<div class="error-message"><MT_TRANS phrase="<TMPL_VAR NAME=BTIMES_ERROR>"></div>
+</TMPL_IF>
+
+<script type="text/javascript">
+<!--
+	function changeElementState() {
+	}
+//-->
+</script>
+
+<form name="save_form" method="post" action="<TMPL_VAR NAME=BTIMES_SCRIPT_LOCATION>">
+<input type="hidden" name="__mode" value="save" />
+
+<div id="cfg-prefs">
+<h3>Configuration</h3>
+<div class="field">
+<h4>How To Use The Below Settings</h4>
+<p>
+The below settings, are <i>global</i> settings. Allthough they can be overwritten
+using tag attributes (e.g. &lt;BlogTimes mode=&quot;monthly&quot;&gt;). If you
+don't provide any setting at all, the plugin's default settings will be used.
+</p>
+</div>
+<div class="field">
+<h4><a name="btimes_mode"><label for="btimes_mode">Blogtimes Mode:</label></a>&nbsp;
+<select name="btimes_mode" id="btimes_mode">
+<option value="classic"<TMPL_IF NAME=BTIMES_MODE_CLASSIC> selected</TMPL_IF>>classic</option>
+<option value="daily"<TMPL_IF NAME=BTIMES_MODE_DAILY> selected</TMPL_IF>>daily</option>
+<option value="weekly"<TMPL_IF NAME=BTIMES_MODE_WEEKLY> selected</TMPL_IF>>weekly</option>
+<option value="monthly"<TMPL_IF NAME=BTIMES_MODE_MONTHLY> selected</TMPL_IF>>monthly</option>
+<option value="yearly"<TMPL_IF NAME=BTIMES_MODE_YEARLY> selected</TMPL_IF>>yearly</option>
+<option value="yearly_exone"<TMPL_IF NAME=BTIMES_MODE_YEARLY_EXONE> selected</TMPL_IF>>yearly_exone</option>
+<option value="yearly_extwo"<TMPL_IF NAME=BTIMES_MODE_YEARLY_EXTWO> selected</TMPL_IF>>yearly_extwo</option>
+</select></h4>
+<p>This option allows you to specify whether to plot minutes of a day, weekly, monthly or yearly stats. 
+Currently it is possible to select one of the following MT-BlogTimes modes:</p>
+<p>
+<ul>
+<li>Classic: Plots a period of <i>one month</i> and highlights those <i>hours</i> with plenty of blog entries.</li>
+<li>Daily: Plots a period of <i>one day</i> and highlights those <i>hours</i> with plenty of blog entries.</li>
+<li>Weekly: Plots a period of <i>one week</i> and highlights those <i>days</i> with plenty of blog entries.</li>
+<li>Monthly: Plots a period of <i>one month</i> and highlights those <i>days</i> with plenty of blog entries.</li>
+<li>Yearly: Plots a period of <i>one year</i> and highlights those <i>month</i> with plenty of blog entries.</li>
+<li>Yearly Exone: Plots a period of <i>one year</i> and highlights those <i>weeks</i> with plenty of blog entries.</li>
+<li>Yearly Extwo: Plots a period of <i>one year</i> and highlights those <i>days</i> with plenty of blog entries.</li>
+</ul>
+</p>
+<p>
+<h5>Notes</h5>
+<ul>
+<li>You should be aware of the fact that using mode &quot;Yearly Extwo&quot; won't produce nice charts,
+because it is quite impossible to plot 365 days on a chart with 400 pixels. If you still want to plot
+365 days, try tweaking the <a href="#btimes_print_everynth">&quot;Print every nth abscissa label&quot;</a> option.</li>
+<li>If you choose mode $quot;Weekly&quot;, A scale from day 1 to day 7 is plotted where day is Monday
+and day 7 stands for sunday.</li>
+<li>If you want textual values instead of numerical on the abscissa scale, you'll have to switch the
+<a href="#btimes_cscale">&quot;Convert Abscissa Scale&quot;</a> to &quot;on&quot;.</li>
+</ul>
+</p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_print_everynth"><label for="btimes_print_everynt">Print every nth abscissa label:</label></a>&nbsp;
+<select name="btimes_print_everynth" id="btimes_print_everynth">
+<option value="any"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_ANY> selected</TMPL_IF>>any</option>
+<option value="2nd"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_2ND> selected</TMPL_IF>>2nd</option>
+<option value="4th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_4TH> selected</TMPL_IF>>4th</option>
+<option value="6th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_6TH> selected</TMPL_IF>>6th</option>
+<option value="8th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_8TH> selected</TMPL_IF>>8th</option>
+<option value="10th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_10TH> selected</TMPL_IF>>10th</option>
+<option value="20th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_20TH> selected</TMPL_IF>>20th</option>
+<option value="30th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_30TH> selected</TMPL_IF>>30th</option>
+<option value="40th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_40TH> selected</TMPL_IF>>40th</option>
+<option value="50th"<TMPL_IF NAME=BTIMES_PRINT_EVERYNTH_50TH> selected</TMPL_IF>>50th</option>
+</select></h4>
+<p>This option allows you to only print certain abscissa labels.</p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_ctype"><label for="btimes_ctype">Chart Type:</label></a>&nbsp;
+<select name="btimes_ctype" id="btimes_ctype">
+<option value="bars"<TMPL_IF NAME=BTIMES_CTYPE_BARS> selected</TMPL_IF>>bars</option>
+<option value="bars3d"<TMPL_IF NAME=BTIMES_CTYPE_BARS3D> selected</TMPL_IF>>bars3d</option>
+<option value="lines"<TMPL_IF NAME=BTIMES_CTYPE_LINES> selected</TMPL_IF>>lines</option>
+<option value="lines3d"<TMPL_IF NAME=BTIMES_CTYPE_LINES3D> selected</TMPL_IF>>lines3d</option>
+<option value="classic"<TMPL_IF NAME=BTIMES_CTYPE_CLASSIC> selected</TMPL_IF>>classic</option>
+</select></h4>
+<p>This option allows you to specify what kind of chart type should be ploted. Currently 
+it is possible to select one of the following chart types:</p>
+<p>
+<ul>
+<li>Vertical Bars 2D (aka bars)</li>
+<li>Vertical Bars 3D (aka bars3d)</li>
+<li>A lines 2D chart (aka lines)</li>
+<li>A lines 3D chart (aka lines3d)</li>
+<li>A old fashioned/classic chart (aka classic)</li>
+</ul>
+</p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_apitype"><label for="btimes_apitype">Image API Type:</label></a>&nbsp;
+<select name="btimes_apitype" id="btimes_apitype">
+<option value="gd"<TMPL_IF NAME=BTIMES_APITYPE_GD> selected</TMPL_IF>>gd</option>
+<option value="im"<TMPL_IF NAME=BTIMES_APITYPE_IM> selected</TMPL_IF>>im</option>
+<option value="svg"<TMPL_IF NAME=BTIMES_APITYPE_SVG> selected</TMPL_IF>>svg</option>
+<option value="swf"<TMPL_IF NAME=BTIMES_APITYPE_SWF> selected</TMPL_IF>>swf</option>
+</select></h4>
+<p>This option allows you to specify which image API should be used to plot the image. 
+Currently it is possible to select one of the following image APIs:</p>
+<p>
+<ul>
+<li>GD: Generates a PNG image.</li>
+<li>IM: Generates a PNG image.</li>
+<li>SVG: Generates a vector graphics object.</li>
+<li>SWF: Generates a Flash movie.</li>
+</ul>
+</p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_sdir"><label for="btimes_sdir">Save Directory:</label></a>&nbsp;<input type="text" name="btimes_sdir" id="btimes_sdir" value="<TMPL_VAR NAME=BTIMES_SDIR>"></h4>
+<p>This options allows you to specify where to store the generated images</p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_withmap"><label for="btimes_withmap">Enable Imagemap:</label></a>&nbsp;<input type="checkbox" name="btimes_withmap" id="btimes_withmap" value="1" <TMPL_IF NAME=BTIMES_MAP_ENABLED> checked="1"</TMPL_IF>/></h4>
+<p>If you enable this option, an image map will be generated. An image map allows
+your blog visitors to navigate through your blog using the entries displayed at
+the blogtimes image.</p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_map_type"><label for="btimes_map_type">Imagemap Type:</label></a>&nbsp;
+<select name="btimes_map_type" id="btimes_map_type">
+<option value="client"<TMPL_IF NAME=BTIMES_MAP_TYPE_CLIENT> selected</TMPL_IF>>client</option>
+<option value="server"<TMPL_IF NAME=BTIMES_MAP_TYPE_SERVER> selected</TMPL_IF>>server</option>
+</select></h4>
+<p>This option allows you to specify what kind of imagemaps should be created. Currently 
+it is possible to select one of the following imagemap types:</p>
+<p>
+<ul>
+<li>Client Imagemap (will be processed by your browser)</li>
+<li>Server Imagemap (will be processed by the server that serves the HTML page)</li>
+</ul>
+</p>
+<p>
+<b>Note: </b>Usually you should select &quot;client&quot; because almost any modern browser
+software suite is able to process client-side imagemaps. Though, if you are concerned because some
+people which are visiting your blog are still using outdated browsers, you should select &quot;server&quot;.
+Keep in mind that the creation of server-side imagemaps was only tested using <a href="http://httpd.apache.org/docs-2.0/mod/mod_imap.html" target="_blank">mod_imap</a>
+which is part of the <a href="http://httpd.apache.org/" target="_blank">Apache HTTP daemon</a> software.
+<p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_linkto_archive"><label for="btimes_linkto_archive">Link Map to Archive:</label></a><br />
+<input type="radio" name="btimes_linkto_archive" id="btimes_linkto_archive" value="Individual"<TMPL_IF NAME=BTIMES_LINKTO_ARCHIVE_INDIVIDUAL> checked="1"</TMPL_IF>/>&nbsp;Individual Archive<br />
+<input type="radio" name="btimes_linkto_archive" id="btimes_linkto_archive" value="Daily"<TMPL_IF NAME=BTIMES_LINKTO_ARCHIVE_DAILY> checked="1"</TMPL_IF>/>&nbsp;Daily Archive<br />
+<input type="radio" name="btimes_linkto_archive" id="btimes_linkto_archive" value="Weekly"<TMPL_IF NAME=BTIMES_LINKTO_ARCHIVE_WEEKLY> checked="1"</TMPL_IF>/>&nbsp;Weekly Archive<br />
+<input type="radio" name="btimes_linkto_archive" id="btimes_linkto_archive" value="Monthly"<TMPL_IF NAME=BTIMES_LINKTO_ARCHIVE_MONTHLY> checked="1"</TMPL_IF>/>&nbsp;Monthly Archive<br />
+<input type="radio" name="btimes_linkto_archive" id="btimes_linkto_archive" value="Monthly"<TMPL_IF NAME=BTIMES_LINKTO_ARCHIVE_CATEGORY> checked="1"</TMPL_IF>/>&nbsp;Category Archive</h4>
+<p>This option allows you to define to what archive type a map area would be linked to (e.g. to a daily archive).</p>
+<p><b>Note: </b> It is on you to ensure that the specified archive type already exists. If not try to configure
+Movable Type to generate the appropriate archive type.</p>
+</div>
+
+<div class="field">
+<h4><a name="btimes_cscale"><label for="btimes_cscale">Convert Abscissa Scale:</label></a>&nbsp;<input type="checkbox" name="btimes_cscale" id="btimes_cscale" value="1" <TMPL_IF NAME=BTIMES_CONVERT_SCALE_ENABLED> checked="1"</TMPL_IF>/></h4>
+<p>If you enable this option, MT-BlogTimes tries for example to plot &quot;Mon&quot; instead of &quot;1&quot; on the abscissa scale.</p>
+</div>
+</div>
+
+<div id="button-bar">
+<input type="submit" value="<MT_TRANS phrase="Save">" />
+</div>
+
+</form>
+
+<!-- Begin copyright and version info -->
+<TMPL_INCLUDE NAME="footer.tmpl">
+<!-- End copyright and version info -->
+
+</body>
+</html>
